@@ -31,8 +31,8 @@ vi main.tf              																	//terrraform scripting file
 inside file
 
 provider "aws" {
-access_key = "AKIA2ENTVZIPAJP55BE6"
-secret_key = "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"
+access_key =" "
+secret_key ""
 region =  "ca-central-1"
 }
 
