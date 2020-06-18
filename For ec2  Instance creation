@@ -1,10 +1,87 @@
+TERRAFORM SCRIPTING:
+
+1)Resource: aws_instance
+
+Provides an EC2 instance resource. This allows instances to be created, updated, and deleted. Instances also support provisioning.
+
+#######first create an  IAM user with admin access and prgmmtic access
+########ssh the ec2 instance for terraform script creation
+
+
+mkdir terraformserver then cd /terraformserver
+
+yum install wget -y															//installed the wget 
+
+wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip         //download the terraform package
+
+yum install unzip -y                             												//installed the wget
+
+unzip terraform_0.11.13_linux_amd64.zip																//unzip the terraform package
+
+sudo mv terraform /usr/local/bin/                                                             //move the package to /usr/local/bin/
+
+rm terraform_0.11.13_linux_amd64.zip                                                          //remove the zip file
+
+./terraform -v 																				//check the terraform version
+
+echo $ "export PATH=\$PATH:$(pwd)" >> ~/.bash_profile										//make an entry in that folder
+
+vi main.tf              																	//terrraform scripting file 
+
+inside file
+
 provider "aws" {
 access_key = "AKIA2ENTVZIPAJP55BE6"
 secret_key = "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"
 region =  "ca-central-1"
 }
 
+
+##############################################incase of aws_instance##############################################################
+
 resource "aws_instance" "web"  {
         ami   = "ami-01b8afc3676031bc7"
         instance_type = "t2.micro"
 }
+
+
+###############################################incase of aws_vpc##################################################################
+
+resource "aws_vpc" "myvpc" {
+cidr_block = "10.0.0.0/16"
+tags {
+Name = "myvpc"
+}}
+
+
+
+./terraform init      												//initialization checks the version and plugins ,constraints the configiration
+
+./terraform plan                        							//excecution plan generated
+
+./terraform apply 													// final select and apply the settings
+
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+
+
+Output for aws_instance: 
+
+
+aws_instance.web: Creating...
+aws_instance.web: Still creating... [10s elapsed]
+aws_instance.web: Still creating... [20s elapsed]
+aws_instance.web: Creation complete after 24s [id=i-0a91a96f3192d8dc9]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+
+
+
